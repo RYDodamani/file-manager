@@ -1,7 +1,10 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 
-const backendUrl = 'http://localhost:1338'
+const backendUrl = {
+  // url:'http://localhost:1338',
+  url:'http://mynodeapp.hopto.org'
+}
 
 function App() {
   const [files, setFiles] = useState([]);
@@ -17,7 +20,7 @@ function App() {
       const formData = new FormData();
       formData.append('file', selectedFile);
 
-      fetch(backendUrl+'/files/upload', {
+      fetch(backendUrl.url+'/files/upload', {
         method: 'POST',
         body: formData,
       })
@@ -30,7 +33,7 @@ function App() {
   };
   const handleDelete = (fileName) => {
     console.log('DELETING FILE',fileName)
-    fetch(backendUrl+`/files/delete/${fileName}`, {
+    fetch(backendUrl.url+`/files/delete/${fileName}`, {
       method: 'DELETE',
     })
     .then((response) => {
@@ -46,7 +49,7 @@ function App() {
   
   const deletefile = (fileName) => {
     console.log('DELETING FILE',fileName)
-    fetch(backendUrl+`/files/delete/`, {
+    fetch(backendUrl.url+`/files/delete/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json' // Set the content type to JSON
@@ -64,7 +67,7 @@ function App() {
   };
 
   useEffect(()=>{
-    fetch('http://localhost:1338/files/list').then(res=>res.json()).then(data=>{
+    fetch(backendUrl.url+'/files/list').then(res=>res.json()).then(data=>{
       setFiles(data)
     })
   })
